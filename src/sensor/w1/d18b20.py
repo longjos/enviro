@@ -29,6 +29,7 @@ class D18B20(object):
     ):
         self.device_id = device_id
         self.device_file = device_file
+        self.last_value = 0
 
     def _read_sensor(self):
         fp = open(self.device_file, 'r')
@@ -38,12 +39,14 @@ class D18B20(object):
         temperature_position = data_rows[1].find('t=')
         if temperature_position != -1:
             temperature_data = data_rows[1][temperature_position+2:]
+
             return temperature_data
 
     def read(self):
         raw_data = self._read_sensor()
         if raw_data:
-            return self.c_to_f(self.raw_to_c(raw_data))
+            self.last_value = self.c_to_f(self.raw_to_c(raw_data))
+            return self.last_value
         else:
             return None
 

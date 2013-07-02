@@ -21,10 +21,12 @@ device_bus = Bus()
 devices = device_bus.scan_devices()
 while True:
     for device_id, device in devices.iteritems():
+        last_value = device.last_value
         sensor_data = device.read()
         if sensor_data:
             print "Sensor %s says: %s" % (device_id, sensor_data)
-            collection_bus.record(device_id, sensor_data)
-    time.sleep(1)
+            if sensor_data != last_value:
+                collection_bus.record(device_id, sensor_data)
+    time.sleep(.5)
 
 
