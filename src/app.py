@@ -9,12 +9,12 @@ config = ConfigParser.SafeConfigParser()
 config.read('config.ini')
 
 collection_bus = CollectionBus()
-# collection_bus.register_collector(
-#     LibratoCollector(
-#         config.get('metrics', 'user_name'),
-#         config.get('metrics', 'api_key')
-#     )
-# )
+collection_bus.register_collector(
+    LibratoCollector(
+        config.get('metrics', 'user_name'),
+        config.get('metrics', 'api_key')
+    )
+)
 
 
 device_bus = Bus()
